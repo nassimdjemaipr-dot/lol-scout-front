@@ -1,0 +1,148 @@
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+  padding: var(--space-8);
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-teal));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-dark-blue);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-4xl);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.pseudo {
+  margin: 0;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+.available {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.bio {
+  color: var(--color-text-muted);
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+@media (min-width: 768px) {
+  .profileCard {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: var(--space-6);
+  }
+  .info {
+    align-items: flex-start;
+  }
+  .badges {
+    justify-content: flex-start;
+  }
+}
+
+
+/* ─── SECTIONS ──────────────────────────────────────────── */
+.section {
+  margin-bottom: var(--space-10);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-4);
+  font-family: var(--font-body);
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .statsGrid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.statBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-1);
+  padding: var(--space-5);
+}
+
+.statLabel {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.statValue {
+  color: var(--color-gold);
+  font-size: var(--font-size-2xl);
+}
+
+.championsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .championsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.champCard {
+  padding: var(--space-5);
+}
+
+.champName {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-body);
+}
+
+.champStats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}

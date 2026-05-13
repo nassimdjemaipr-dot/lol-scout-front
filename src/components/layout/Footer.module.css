@@ -1,0 +1,59 @@
+.footer {
+  margin-top: auto;
+  padding: var(--space-10) 0 var(--space-6);
+  border-top: 1px solid var(--color-border);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-cream);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.logoMark {
+  color: var(--color-gold);
+  font-size: var(--font-size-xl);
+}
+
+.links {
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.links a {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.links a:hover {
+  color: var(--color-gold);
+}
+
+.legal {
+  color: var(--color-text-faded);
+  font-size: var(--font-size-xs);
+}
+
+@media (min-width: 768px) {
+  .inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}

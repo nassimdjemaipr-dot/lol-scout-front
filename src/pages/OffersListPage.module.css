@@ -1,0 +1,100 @@
+.header {
+  margin-bottom: var(--space-8);
+}
+
+.header h1 {
+  margin-bottom: var(--space-3);
+}
+
+.filters {
+  margin-bottom: var(--space-8);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  padding: var(--space-2) var(--space-4);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: var(--transition-base);
+}
+
+.chip:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.chipActive {
+  background: var(--color-gold);
+  color: var(--color-dark-blue);
+  border-color: var(--color-gold);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.offerCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.offerHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.offerTitle {
+  font-family: var(--font-body);
+  font-size: var(--font-size-lg);
+}
+
+.club {
+  color: var(--color-gold);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.offerBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.offerDesc {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.cta {
+  text-decoration: none;
+  display: block;
+}
