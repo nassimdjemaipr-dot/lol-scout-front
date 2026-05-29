@@ -23,6 +23,12 @@ export const playerService = {
     return data;
   },
 
+  /** Profil du joueur connecté (via le JWT) */
+  async getMyProfile(): Promise<Player> {
+    const { data } = await api.get<Player>('/players/me');
+    return data;
+  },
+
   /** Met à jour le profil du joueur connecté */
   async updateMyProfile(updates: Partial<Player>): Promise<Player> {
     const { data } = await api.patch<Player>('/players/me', updates);
