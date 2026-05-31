@@ -35,9 +35,28 @@ export const playerService = {
     return data;
   },
 
+  /** Lie un compte Riot Games au profil du joueur connecté */
+  async linkRiotAccount(summonerName: string, region: string): Promise<{
+    id: number;
+    summonerName: string;
+    puuid: string;
+    region: string;
+  }> {
+    const { data } = await api.post('/players/me/riot-account', {
+      summonerName,
+      region,
+    });
+    return data;
+  },
+
   /** Lance la synchronisation avec l'API Riot Games */
-  async syncRiotStats(): Promise<Player> {
-    const { data } = await api.post<Player>('/players/me/sync-riot');
+  async syncRiotStats(): Promise<{
+    tier: string;
+    winrate: string;
+    rankedGamesCount: number;
+    lastSyncAt: string;
+  }> {
+    const { data } = await api.post('/players/me/sync-riot');
     return data;
   },
 };

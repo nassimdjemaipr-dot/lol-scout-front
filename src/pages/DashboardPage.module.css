@@ -73,3 +73,70 @@
   font-size: var(--font-size-sm);
   margin-top: var(--space-2);
 }
+
+.success {
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-2);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ─── Formulaire Riot inline ────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.field label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.input {
+  background: var(--color-dark-blue);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(10, 200, 185, 0.15);
+}
+
+.statsInline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  background: var(--color-dark-blue);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.changeAccount {
+  display: block;
+  margin: var(--space-3) auto 0;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.changeAccount:hover {
+  color: var(--color-gold);
+}
