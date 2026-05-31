@@ -20,6 +20,7 @@ Le back doit tourner sur `http://localhost:8000` pour que le front fonctionne.
 | State serveur / cache | @tanstack/react-query 5 |
 | HTTP client | axios 1 (avec intercepteur JWT auto) |
 | Formulaires | react-hook-form + zod |
+| Notifications (toasts) | react-hot-toast (stylisé charte LoL) |
 | Styles | CSS Modules + variables CSS (pas de Tailwind/MUI) |
 | Polices | Cinzel (titres), Outfit (texte), JetBrains Mono (stats) — Google Fonts |
 
@@ -105,9 +106,9 @@ Le compte `club1` a déjà reçu des candidatures à traiter.
 
 | Route | Page |
 |---|---|
-| `/dashboard/player` | Dashboard joueur (profil + Riot + candidatures) |
+| `/dashboard/player` | Dashboard joueur (profil + lien Riot + sync stats + candidatures) |
 | `/dashboard/player/applications` | Mes candidatures avec statut |
-| `/dashboard/player/profile` | Modifier mon profil *(placeholder en Jalon 5)* |
+| `/dashboard/player/profile` | Modifier mon profil (pseudo, rôle, bio, disponibilité) |
 
 ### Club (`ROLE_CLUB`)
 
@@ -115,8 +116,8 @@ Le compte `club1` a déjà reçu des candidatures à traiter.
 |---|---|
 | `/dashboard/club` | Dashboard club |
 | `/dashboard/club/applications` | Candidatures reçues (Accepter / Refuser) |
-| `/dashboard/club/offers` | Mes offres *(placeholder en Jalon 5)* |
-| `/dashboard/club/offers/new` | Créer une offre *(placeholder en Jalon 5)* |
+| `/dashboard/club/offers/new` | Créer une offre (titre, rôle, rang min, date expiration) |
+| `/dashboard/club/offers` | Mes offres *(prévu Jalon 6)* |
 
 ---
 
@@ -185,9 +186,19 @@ Le flow est géré par `AuthContext` :
 
 ## 📋 Statut du projet (Jalon 5 — fin mai 2026)
 
-✅ **Fait** : pages publiques, auth, flow candidature complet (joueur + club), dashboards, charte graphique.
+✅ **Livré Jalon 5 (v1.0-beta)** :
+- Pages publiques (joueurs, offres, profil)
+- Auth complète (login / register / logout) avec persistance JWT
+- Flow candidature complet (joueur ↔ club)
+- Dashboards joueur / club
+- Lier compte Riot + synchroniser stats en live
+- Modifier mon profil joueur
+- Créer une offre (club)
+- Système de toasts (feedback visuel sur toutes les actions)
+- Header avec badge de rôle + bouton Déconnexion
+- Charte graphique LoL respectée (Cinzel + tokens CSS)
 
-⏳ **Prévu Jalon 6 (juin)** : pages "créer une offre", "modifier profil", "lier compte Riot", responsive polish, tests Jest.
+⏳ **Prévu Jalon 6 (juin)** : tests Jest/Vitest, page "Mes offres" club, déploiement production.
 
 Bilan détaillé dans le backend : [docs/BILAN.md](https://github.com/nassimdjemaipr-dot/lol-scout-api/blob/main/docs/BILAN.md)
 
