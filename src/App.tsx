@@ -16,6 +16,7 @@ import { PlayerDashboardPage } from './pages/PlayerDashboardPage';
 import { ClubDashboardPage } from './pages/ClubDashboardPage';
 import { MyApplicationsPage } from './pages/MyApplicationsPage';
 import { ClubApplicationsPage } from './pages/ClubApplicationsPage';
+import { CreateOfferPage } from './pages/CreateOfferPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 
 function App() {
@@ -44,7 +45,7 @@ function App() {
         <Route element={<ProtectedRoute requiredRole="ROLE_CLUB" />}>
           <Route path="/dashboard/club" element={<ClubDashboardPage />} />
           <Route path="/dashboard/club/offers" element={<PlaceholderPage title="Mes offres" />} />
-          <Route path="/dashboard/club/offers/new" element={<PlaceholderPage title="Créer une offre" />} />
+          <Route path="/dashboard/club/offers/new" element={<CreateOfferPage />} />
           <Route path="/dashboard/club/applications" element={<ClubApplicationsPage />} />
         </Route>
 
