@@ -26,7 +26,6 @@ export interface Player {
   isAvailable: boolean;
   bio?: string;
   riotAccount?: RiotAccount;
-  stats?: PlayerStats;
 }
 
 
@@ -36,6 +35,7 @@ export interface RiotAccount {
   puuid: string;
   region: string;
   lastSyncAt?: string;
+  stats?: PlayerStats;
 }
 
 
@@ -47,7 +47,7 @@ export interface PlayerStats {
   csPerMinute: string;
   visionScore: string;
   rankedGamesCount: number;
-  topChampions?: PlayedChampion[];
+  playedChampions?: PlayedChampion[];
 }
 
 

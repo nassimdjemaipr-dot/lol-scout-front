@@ -65,7 +65,7 @@ export function PlayerDashboardPage() {
               </p>
               <div className={styles.badges}>
                 <RoleBadge role={player.gameRole} size="sm" />
-                <RankBadge tier={player.stats?.tier} size="sm" />
+                <RankBadge tier={player.riotAccount?.stats?.tier} size="sm" />
               </div>
             </>
           ) : (

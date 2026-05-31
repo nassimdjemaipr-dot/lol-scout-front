@@ -101,10 +101,10 @@ export function PlayersListPage() {
                 </div>
 
                 <div className={styles.stats}>
-                  <RankBadge tier={player.stats?.tier} size="sm" />
-                  {player.stats?.winrate && (
+                  <RankBadge tier={player.riotAccount?.stats?.tier} size="sm" />
+                  {player.riotAccount?.stats?.winrate && (
                     <span className="stat text-gold">
-                      {Number(player.stats.winrate).toFixed(1)}% WR
+                      {Number(player.riotAccount.stats.winrate).toFixed(1)}% WR
                     </span>
                   )}
                 </div>

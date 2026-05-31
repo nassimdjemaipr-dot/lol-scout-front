@@ -59,7 +59,7 @@ export function ClubApplicationsPage() {
                 </div>
                 <div className={styles.candidateBadges}>
                   {app.player?.gameRole && <RoleBadge role={app.player.gameRole} size="sm" />}
-                  {app.player?.stats?.tier && <RankBadge tier={app.player.stats.tier} size="sm" />}
+                  {app.player?.riotAccount?.stats?.tier && <RankBadge tier={app.player.riotAccount.stats.tier} size="sm" />}
                   <StatusBadge status={app.status} />
                 </div>
               </div>
