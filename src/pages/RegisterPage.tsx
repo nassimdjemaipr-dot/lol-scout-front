@@ -7,6 +7,7 @@ import { authService } from '../services/auth.service';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
+import { notify } from '../lib/notify';
 import type { UserRole } from '../types';
 import styles from './AuthForm.module.css';
 
@@ -41,11 +42,13 @@ export function RegisterPage() {
       });
       // Auto-login après inscription réussie
       await login(values.email, values.password);
+      notify.success('Compte cree avec succes. Bienvenue sur LoL Scout !');
       navigate('/', { replace: true });
     } catch (err: unknown) {
       const msg =
         err instanceof Error ? err.message : "Erreur lors de l'inscription.";
       setServerError(msg);
+      notify.error(msg);
     }
   };
 

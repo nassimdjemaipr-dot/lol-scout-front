@@ -7,6 +7,7 @@ import { isAxiosError } from 'axios';
 import { offerService, type CreateOfferPayload } from '../services/offer.service';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
+import { notify } from '../lib/notify';
 import { PLAYER_ROLES, RANKS } from '../types';
 import styles from './CreateOfferPage.module.css';
 
@@ -45,8 +46,10 @@ export function CreateOfferPage() {
         expiresAt: values.expiresAt || undefined,
       }),
     onSuccess: (offer) => {
+      notify.success('Offre publiee avec succes.');
       navigate(`/offers/${offer.id}`);
     },
+    onError: (err) => notify.apiError(err, "Erreur lors de la creation de l'offre."),
   });
 
   const serverError = mutation.isError

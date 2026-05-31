@@ -8,6 +8,7 @@ import { isAxiosError } from 'axios';
 import { playerService } from '../services/player.service';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
+import { notify } from '../lib/notify';
 import { PLAYER_ROLES, type PlayerRole } from '../types';
 import styles from './CreateOfferPage.module.css';
 
@@ -63,8 +64,10 @@ export function EditPlayerProfilePage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['me', 'player'] });
       queryClient.invalidateQueries({ queryKey: ['players'] });
+      notify.success('Profil mis a jour.');
       navigate('/dashboard/player');
     },
+    onError: (err) => notify.apiError(err, 'Erreur lors de la mise a jour.'),
   });
 
   const serverError = mutation.isError

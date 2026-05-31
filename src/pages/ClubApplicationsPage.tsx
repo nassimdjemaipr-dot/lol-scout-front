@@ -8,6 +8,7 @@ import { Button } from '../components/ui/Button';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { RoleBadge } from '../components/ui/RoleBadge';
 import { RankBadge } from '../components/ui/RankBadge';
+import { notify } from '../lib/notify';
 import type { ApplicationStatus } from '../types';
 import styles from './ApplicationsPage.module.css';
 
@@ -22,9 +23,13 @@ export function ClubApplicationsPage() {
   const statusMutation = useMutation({
     mutationFn: ({ id, status }: { id: number; status: ApplicationStatus }) =>
       applicationService.updateStatus(id, status),
-    onSuccess: () => {
+    onSuccess: (_data, { status }) => {
       queryClient.invalidateQueries({ queryKey: ['applications', 'club'] });
+      notify.success(
+        status === 'ACCEPTEE' ? 'Candidature acceptee.' : 'Candidature refusee.',
+      );
     },
+    onError: (err) => notify.apiError(err, 'Erreur lors de la mise a jour.'),
   });
 
   return (
