@@ -10,6 +10,7 @@ import { Card } from '../components/ui/Card';
 import { RoleBadge } from '../components/ui/RoleBadge';
 import { RankBadge } from '../components/ui/RankBadge';
 import { Button } from '../components/ui/Button';
+import { notify } from '../lib/notify';
 import { isAxiosError } from 'axios';
 import styles from './OfferDetailPage.module.css';
 
@@ -28,6 +29,8 @@ export function OfferDetailPage() {
 
   const applyMutation = useMutation({
     mutationFn: () => applicationService.apply(Number(id), message),
+    onSuccess: () => notify.success('Candidature envoyee !'),
+    onError: (err) => notify.apiError(err, "Erreur lors de l'envoi de la candidature."),
   });
 
   if (isLoading) return <p className="text-center text-muted">Chargement…</p>;

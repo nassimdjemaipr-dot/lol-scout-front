@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
+import { notify } from '../lib/notify';
 import styles from './AuthForm.module.css';
 
 interface LoginFormValues {
@@ -29,6 +30,7 @@ export function LoginPage() {
     setServerError(null);
     try {
       await login(values.email, values.password);
+      notify.success('Connexion reussie. Bienvenue !');
       // Redirige vers la page d'origine (si fournie) ou /
       const from = (location.state as { from?: string } | null)?.from ?? '/';
       navigate(from, { replace: true });
@@ -36,6 +38,7 @@ export function LoginPage() {
       const msg =
         err instanceof Error ? err.message : 'Email ou mot de passe incorrect.';
       setServerError(msg);
+      notify.error(msg);
     }
   };
 

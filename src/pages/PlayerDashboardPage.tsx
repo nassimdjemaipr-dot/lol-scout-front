@@ -11,6 +11,7 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { RankBadge } from '../components/ui/RankBadge';
 import { RoleBadge } from '../components/ui/RoleBadge';
+import { notify } from '../lib/notify';
 import styles from './DashboardPage.module.css';
 
 // Régions LoL supportées (correspondent au mapping back RiotSyncService)
@@ -56,7 +57,9 @@ export function PlayerDashboardPage() {
     mutationFn: () => playerService.syncRiotStats(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['me', 'player'] });
+      notify.success('Stats Riot synchronisees.');
     },
+    onError: (err) => notify.apiError(err, 'Erreur lors de la synchronisation.'),
   });
 
   const linkMutation = useMutation({
@@ -64,10 +67,12 @@ export function PlayerDashboardPage() {
     onSuccess: () => {
       // Une fois lié, on déclenche aussi la sync pour avoir les stats tout de suite
       queryClient.invalidateQueries({ queryKey: ['me', 'player'] });
+      notify.success('Compte Riot lie. Recuperation des stats...');
       syncMutation.mutate();
       setForceLinkForm(false);
       setSummonerName('');
     },
+    onError: (err) => notify.apiError(err, 'Impossible de lier le compte Riot.'),
   });
 
   const linkError = linkMutation.isError

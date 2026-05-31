@@ -5,6 +5,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { ProtectedRoute } from './components/layout/ProtectedRoute';
+import { AppToaster } from './components/ui/AppToaster';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
@@ -22,8 +23,10 @@ import { PlaceholderPage } from './pages/PlaceholderPage';
 
 function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
+    <>
+      <AppToaster />
+      <Routes>
+        <Route element={<Layout />}>
         {/* ─── Routes publiques ──────────────────────────── */}
         <Route index element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -52,8 +55,9 @@ function App() {
 
         {/* ─── 404 ───────────────────────────────────────── */}
         <Route path="*" element={<PlaceholderPage title="404 — Page introuvable" />} />
-      </Route>
-    </Routes>
+        </Route>
+      </Routes>
+    </>
   );
 }
 
