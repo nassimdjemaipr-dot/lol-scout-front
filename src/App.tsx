@@ -14,6 +14,8 @@ import { OffersListPage } from './pages/OffersListPage';
 import { OfferDetailPage } from './pages/OfferDetailPage';
 import { PlayerDashboardPage } from './pages/PlayerDashboardPage';
 import { ClubDashboardPage } from './pages/ClubDashboardPage';
+import { MyApplicationsPage } from './pages/MyApplicationsPage';
+import { ClubApplicationsPage } from './pages/ClubApplicationsPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 
 function App() {
@@ -35,7 +37,7 @@ function App() {
         <Route element={<ProtectedRoute requiredRole="ROLE_PLAYER" />}>
           <Route path="/dashboard/player" element={<PlayerDashboardPage />} />
           <Route path="/dashboard/player/profile" element={<PlaceholderPage title="Modifier mon profil" />} />
-          <Route path="/dashboard/player/applications" element={<PlaceholderPage title="Mes candidatures" />} />
+          <Route path="/dashboard/player/applications" element={<MyApplicationsPage />} />
         </Route>
 
         {/* ─── Routes Club (ROLE_CLUB) ──────────────────── */}
@@ -43,7 +45,7 @@ function App() {
           <Route path="/dashboard/club" element={<ClubDashboardPage />} />
           <Route path="/dashboard/club/offers" element={<PlaceholderPage title="Mes offres" />} />
           <Route path="/dashboard/club/offers/new" element={<PlaceholderPage title="Créer une offre" />} />
-          <Route path="/dashboard/club/applications" element={<PlaceholderPage title="Candidatures reçues" />} />
+          <Route path="/dashboard/club/applications" element={<ClubApplicationsPage />} />
         </Route>
 
         {/* ─── 404 ───────────────────────────────────────── */}

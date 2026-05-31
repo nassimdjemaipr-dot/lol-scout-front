@@ -74,3 +74,69 @@
   padding-top: var(--space-6);
   border-top: 1px solid var(--color-border);
 }
+
+/* ─── Formulaire de candidature ─────────────────────────── */
+.applyForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-align: left;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-cream);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.textarea {
+  background: var(--color-dark-blue);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  transition: var(--transition-base);
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(10, 200, 185, 0.15);
+}
+
+.hint {
+  color: var(--color-text-faded);
+  font-size: var(--font-size-xs);
+}
+
+.error {
+  background: rgba(232, 64, 87, 0.1);
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.formActions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+
+.success {
+  background: rgba(40, 183, 69, 0.1);
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  width: 100%;
+}

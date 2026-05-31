@@ -1,0 +1,126 @@
+/* Styles partagés par MyApplicationsPage et ClubApplicationsPage */
+
+.header {
+  margin-bottom: var(--space-8);
+}
+
+.header h1 {
+  margin-bottom: var(--space-3);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-6);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ─── Ligne candidature (vue joueur) ────────────────────── */
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.rowMain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.offerTitle {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  color: var(--color-cream);
+}
+
+.offerTitle:hover {
+  color: var(--color-gold);
+}
+
+.club {
+  color: var(--color-gold);
+  font-size: var(--font-size-sm);
+}
+
+.rowSide {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.date {
+  color: var(--color-text-faded);
+  font-size: var(--font-size-xs);
+}
+
+@media (min-width: 768px) {
+  .row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* ─── Carte candidature (vue club) ──────────────────────── */
+.candidateCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.candidateHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.candidateName {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-1);
+}
+
+.offerLabel {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.candidateBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.message {
+  background: var(--color-dark-blue);
+  border-left: 3px solid var(--color-gold);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .candidateHead {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}

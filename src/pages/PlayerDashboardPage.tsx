@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { playerService } from '../services/player.service';
+import { applicationService } from '../services/application.service';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { RankBadge } from '../components/ui/RankBadge';
@@ -15,15 +17,17 @@ export function PlayerDashboardPage() {
   const queryClient = useQueryClient();
   const [syncError, setSyncError] = useState<string | null>(null);
 
-  // On suppose un endpoint /players/me qui renvoie le joueur lié à l'user courant
+  // Profil du joueur connecté (vrai endpoint /api/players/me)
   const { data: player } = useQuery({
     queryKey: ['me', 'player'],
-    queryFn: async () => {
-      // Fallback : si l'endpoint /me/player n'existe pas, on peut récupérer
-      // le profil via une autre route. Ici on tente direct.
-      const list = await playerService.list();
-      return list[0]; // temporaire, sera remplacé par un vrai endpoint /players/me
-    },
+    queryFn: () => playerService.getMyProfile(),
+    enabled: !!user,
+  });
+
+  // Candidatures du joueur connecté
+  const { data: applications } = useQuery({
+    queryKey: ['applications', 'me'],
+    queryFn: () => applicationService.listMine(),
     enabled: !!user,
   });
 
@@ -37,6 +41,8 @@ export function PlayerDashboardPage() {
       setSyncError(err.message || 'Erreur lors de la synchronisation.');
     },
   });
+
+  const applicationsCount = applications?.length ?? 0;
 
   return (
     <div className="container">
@@ -65,9 +71,11 @@ export function PlayerDashboardPage() {
           ) : (
             <p className="text-muted">Profil non créé.</p>
           )}
-          <Button variant="ghost" size="sm" fullWidth>
-            Modifier mon profil
-          </Button>
+          <Link to="/dashboard/player/profile">
+            <Button variant="ghost" size="sm" fullWidth>
+              Modifier mon profil
+            </Button>
+          </Link>
         </Card>
 
         {/* ─── Carte Riot ──────────────────────────────── */}
@@ -76,15 +84,11 @@ export function PlayerDashboardPage() {
           {player?.riotAccount ? (
             <>
               <p className="mono">{player.riotAccount.summonerName}</p>
-              <p className="text-muted">
-                Région : {player.riotAccount.region}
-              </p>
+              <p className="text-muted">Région : {player.riotAccount.region}</p>
               {player.riotAccount.lastSyncAt && (
                 <p className="text-muted">
                   Dernière sync :{' '}
-                  {new Date(player.riotAccount.lastSyncAt).toLocaleDateString(
-                    'fr-FR'
-                  )}
+                  {new Date(player.riotAccount.lastSyncAt).toLocaleDateString('fr-FR')}
                 </p>
               )}
             </>
@@ -106,10 +110,21 @@ export function PlayerDashboardPage() {
         {/* ─── Carte candidatures ──────────────────────── */}
         <Card>
           <h3 className={styles.cardTitle}>Mes candidatures</h3>
-          <p className="text-muted">Aucune candidature pour le moment.</p>
-          <Button variant="ghost" size="sm" fullWidth>
-            Parcourir les offres
-          </Button>
+          {applicationsCount > 0 ? (
+            <p>
+              <strong className="text-gold" style={{ fontSize: '1.5rem' }}>
+                {applicationsCount}
+              </strong>{' '}
+              candidature{applicationsCount > 1 ? 's' : ''} en cours
+            </p>
+          ) : (
+            <p className="text-muted">Aucune candidature pour le moment.</p>
+          )}
+          <Link to={applicationsCount > 0 ? '/dashboard/player/applications' : '/offers'}>
+            <Button variant="ghost" size="sm" fullWidth>
+              {applicationsCount > 0 ? 'Voir mes candidatures' : 'Parcourir les offres'}
+            </Button>
+          </Link>
         </Card>
       </div>
     </div>
