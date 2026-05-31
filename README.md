@@ -1,5 +1,11 @@
 # LoL Scout — Frontend
 
+[![CI Frontend](https://github.com/nassimdjemaipr-dot/lol-scout-front/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nassimdjemaipr-dot/lol-scout-front/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/nassimdjemaipr-dot/lol-scout-front?include_prereleases&label=release)](https://github.com/nassimdjemaipr-dot/lol-scout-front/releases)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-~5-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+
 > Application web React du projet **LoL Scout** — plateforme de recrutement esport League of Legends.
 > SPA en **React 19 + TypeScript** avec **Vite**, design tokens fidèles à la charte LoL.
 
