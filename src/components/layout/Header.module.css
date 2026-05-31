@@ -94,6 +94,20 @@
   font-size: var(--font-size-sm);
 }
 
+.roleBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  background: rgba(200, 155, 60, 0.12);
+  border: 1px solid var(--color-border);
+  color: var(--color-gold);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
 /* ─── Tablette ──────────────────────────────────────── */
 @media (min-width: 768px) {
   .logoText {
