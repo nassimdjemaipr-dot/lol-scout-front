@@ -29,9 +29,9 @@ export const playerService = {
     return data;
   },
 
-  /** Met à jour le profil du joueur connecté */
-  async updateMyProfile(updates: Partial<Player>): Promise<Player> {
-    const { data } = await api.patch<Player>('/players/me', updates);
+  /** Met à jour un profil joueur (l'API vérifie l'ownership via JWT) */
+  async update(id: number, updates: Partial<Player>): Promise<Player> {
+    const { data } = await api.patch<Player>(`/players/${id}`, updates);
     return data;
   },
 

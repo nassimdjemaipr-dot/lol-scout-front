@@ -17,6 +17,7 @@ import { ClubDashboardPage } from './pages/ClubDashboardPage';
 import { MyApplicationsPage } from './pages/MyApplicationsPage';
 import { ClubApplicationsPage } from './pages/ClubApplicationsPage';
 import { CreateOfferPage } from './pages/CreateOfferPage';
+import { EditPlayerProfilePage } from './pages/EditPlayerProfilePage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
         {/* ─── Routes Joueur (ROLE_PLAYER) ──────────────── */}
         <Route element={<ProtectedRoute requiredRole="ROLE_PLAYER" />}>
           <Route path="/dashboard/player" element={<PlayerDashboardPage />} />
-          <Route path="/dashboard/player/profile" element={<PlaceholderPage title="Modifier mon profil" />} />
+          <Route path="/dashboard/player/profile" element={<EditPlayerProfilePage />} />
           <Route path="/dashboard/player/applications" element={<MyApplicationsPage />} />
         </Route>
 
