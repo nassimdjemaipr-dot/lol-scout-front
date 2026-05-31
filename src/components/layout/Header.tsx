@@ -4,6 +4,7 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/Button';
+import { notify } from '../../lib/notify';
 import styles from './Header.module.css';
 
 export function Header() {
@@ -12,8 +13,14 @@ export function Header() {
 
   const handleLogout = () => {
     logout();
+    notify.success('A bientot ! Tu es deconnecte.');
     navigate('/');
   };
+
+  const roleBadge =
+    user?.role === 'ROLE_PLAYER' ? '🎮 Joueur'
+    : user?.role === 'ROLE_CLUB' ? '🏆 Club'
+    : null;
 
   return (
     <header className={styles.header}>
@@ -47,6 +54,7 @@ export function Header() {
         <div className={styles.actions}>
           {isAuthenticated ? (
             <>
+              {roleBadge && <span className={styles.roleBadge}>{roleBadge}</span>}
               <span className={styles.email}>{user?.email}</span>
               <Button variant="ghost" size="sm" onClick={handleLogout}>
                 Déconnexion
