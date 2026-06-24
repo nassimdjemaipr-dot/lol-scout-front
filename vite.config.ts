@@ -1,25 +1,9 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
+// Config de test : voir vitest.config.ts (separe pour eviter les conflits de types
+// entre defineConfig de Vite et celui de Vitest).
 export default defineConfig({
   plugins: [react()],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
-    css: true,
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'html'],
-      include: ['src/**/*.{ts,tsx}'],
-      exclude: [
-        'src/**/*.d.ts',
-        'src/main.tsx',
-        'src/vite-env.d.ts',
-        'src/test/**',
-      ],
-    },
-  },
 })
