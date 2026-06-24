@@ -18,9 +18,11 @@ function getTierClass(tier?: string): string {
   if (t.includes('platinum')) return styles.platinum;
   if (t.includes('emerald')) return styles.emerald;
   if (t.includes('diamond')) return styles.diamond;
-  if (t.includes('master')) return styles.master;
-  if (t.includes('grandmaster')) return styles.grandmaster;
+  // Order matters : "grandmaster" must be checked BEFORE "master"
+  // (because "grandmaster".includes("master") is true).
   if (t.includes('challenger')) return styles.challenger;
+  if (t.includes('grandmaster')) return styles.grandmaster;
+  if (t.includes('master')) return styles.master;
   return styles.unranked;
 }
 

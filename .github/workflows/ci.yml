@@ -1,5 +1,5 @@
 # CI front — lance à chaque push / PR sur main
-# Vérifie : install npm, typecheck TypeScript, lint ESLint, build production
+# Vérifie : install npm, typecheck TypeScript, lint ESLint, tests Vitest, build production
 
 name: CI Frontend
 
@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Install + Typecheck + Lint + Build
+    name: Install + Typecheck + Lint + Tests + Build
     runs-on: ubuntu-latest
 
     steps:
@@ -34,7 +34,8 @@ jobs:
         run: npm run lint
         continue-on-error: true
 
+      - name: Run Vitest with coverage
+        run: npm run test:coverage
+
       - name: Build production
         run: npm run build
-
-      # TODO Jalon 6 : ajouter tests Jest quand les tests seront écrits
