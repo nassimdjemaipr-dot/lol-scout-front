@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Test coverage reports (regenerated each run)
+coverage/
+.vitest-cache/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
