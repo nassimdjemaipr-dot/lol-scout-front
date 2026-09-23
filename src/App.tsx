@@ -20,6 +20,9 @@ import { ClubApplicationsPage } from './pages/ClubApplicationsPage';
 import { CreateOfferPage } from './pages/CreateOfferPage';
 import { EditPlayerProfilePage } from './pages/EditPlayerProfilePage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
+import { LegalNoticePage } from './pages/legal/LegalNoticePage';
+import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicyPage';
+import { TermsPage } from './pages/legal/TermsPage';
 
 function App() {
   return (
@@ -37,6 +40,11 @@ function App() {
         <Route path="/offers/:id" element={<OfferDetailPage />} />
         <Route path="/clubs" element={<PlaceholderPage title="Liste des clubs" />} />
         <Route path="/clubs/:id" element={<PlaceholderPage title="Profil club" />} />
+
+        {/* ─── Pages légales (RGPD, mentions) ───────────── */}
+        <Route path="/mentions-legales" element={<LegalNoticePage />} />
+        <Route path="/confidentialite" element={<PrivacyPolicyPage />} />
+        <Route path="/cgu" element={<TermsPage />} />
 
         {/* ─── Routes Joueur (ROLE_PLAYER) ──────────────── */}
         <Route element={<ProtectedRoute requiredRole="ROLE_PLAYER" />}>
