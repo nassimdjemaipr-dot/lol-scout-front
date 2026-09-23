@@ -1,0 +1,18 @@
+.title {
+  font-family: var(--font-heading);
+  color: var(--color-danger);
+  margin-bottom: var(--space-3);
+}
+
+.warning {
+  color: var(--color-danger);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}
