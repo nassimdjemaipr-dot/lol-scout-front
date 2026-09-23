@@ -41,6 +41,41 @@ describe('PlayersListPage', () => {
     });
   });
 
+  it('filters by minimum rank and sends minRank to the API', async () => {
+    listMock.mockResolvedValue([]);
+    renderWithProviders(<PlayersListPage />);
+
+    await waitFor(() => expect(listMock).toHaveBeenCalled());
+
+    await userEvent.selectOptions(screen.getByLabelText(/Rang minimum/i), 'Diamond');
+
+    await waitFor(() =>
+      expect(listMock).toHaveBeenLastCalledWith(
+        expect.objectContaining({ minRank: 'Diamond' })
+      )
+    );
+  });
+
+  it('omits minRank when no rank is selected', async () => {
+    listMock.mockResolvedValue([]);
+    renderWithProviders(<PlayersListPage />);
+
+    await waitFor(() =>
+      expect(listMock).toHaveBeenLastCalledWith(
+        expect.objectContaining({ minRank: undefined })
+      )
+    );
+  });
+
+  it('offers every rank from Iron to Challenger', async () => {
+    listMock.mockResolvedValue([]);
+    renderWithProviders(<PlayersListPage />);
+
+    const select = await screen.findByLabelText(/Rang minimum/i);
+    const options = Array.from(select.querySelectorAll('option')).map((o) => o.value);
+
+    expect(options).toEqual(['', 'Iron', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Emerald', 'Diamond', 'Master', 'Grandmaster', 'Challenger']);
+  });
   it('filters by role when clicking a chip', async () => {
     listMock.mockResolvedValue([]);
     renderWithProviders(<PlayersListPage />);
