@@ -1,0 +1,24 @@
+# Docker Compose pour le front LoL Scout.
+# Lance uniquement le front (build statique servi par Nginx).
+# Le back doit tourner en parallele sur le port 8000 (repo lol-scout-api).
+#
+# Usage :
+#   docker compose up -d --build      # build + demarre en detached
+#   docker compose logs -f front      # suivre les logs
+#   docker compose down               # arret
+#
+# URL apres demarrage : http://localhost:3000
+
+services:
+  front:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        # Override au build si le back tourne ailleurs :
+        # docker compose build --build-arg VITE_API_URL=https://api.prod.example.com/api
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    container_name: lol-scout-front

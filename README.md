@@ -71,6 +71,58 @@ npm run preview       # → lance un serveur statique pour preview le build
 
 ---
 
+## 🐳 Lancement avec Docker (mode production)
+
+Le front est packagé dans une image Docker multi-stage (Node pour builder + Nginx pour servir).
+
+### Prérequis
+- **Docker Desktop** (avec WSL 2 sous Windows)
+- Le **backend lol-scout-api** doit tourner sur `http://localhost:8000`
+
+### Lancement en une commande
+
+```bash
+docker compose up -d --build
+```
+
+→ Front accessible sur **http://localhost:3000** ✅
+
+### Commandes utiles
+
+```bash
+docker compose logs -f front      # suivre les logs en direct
+docker compose restart front      # redémarrer
+docker compose down               # arrêter
+docker compose down -v --rmi all  # tout nettoyer (image comprise)
+```
+
+### Configuration en prod
+
+L'URL de l'API back peut être surchargée au build via une variable d'environnement :
+
+```bash
+# Ligne de commande
+docker compose build --build-arg VITE_API_URL=https://api.prod.example.com/api
+
+# Ou via .env à la racine
+echo "VITE_API_URL=https://api.prod.example.com/api" > .env
+docker compose up -d --build
+```
+
+### Architecture de l'image
+
+- **Stage 1** — `node:22-alpine` : `npm ci` + `npm run build` → génère le dossier `dist/`
+- **Stage 2** — `nginx:alpine` : sert les fichiers statiques + gère le fallback SPA
+- **Taille finale** : 93,4 Mo, dont ~450 Ko d'application — le reste est l'image `nginx:alpine` elle-même (aucun node_modules, aucun code source dans l'image runtime)
+
+Configuration Nginx dans `docker/nginx.conf` :
+- Fallback `try_files` pour que React Router fonctionne sur les URLs directes
+- Gzip activé
+- Cache long sur les assets (JS/CSS avec hash Vite)
+- `no-store` sur `index.html`
+
+---
+
 ## 👤 Comptes de démonstration
 
 > Mot de passe commun : **`password`**
