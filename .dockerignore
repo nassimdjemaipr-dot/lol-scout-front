@@ -1,0 +1,39 @@
+# Fichiers a exclure du contexte Docker.
+# Reduit le poids envoye au daemon Docker et evite de copier des trucs inutiles.
+
+# Deps et builds locaux (regeneres dans le container)
+node_modules
+dist
+build
+
+# Rapports de test et couverture
+coverage
+.vitest-cache
+.nyc_output
+
+# Fichiers Git et CI (pas necessaires pour build)
+.git
+.gitignore
+.github
+
+# Secrets et config locale (jamais dans une image !)
+.env
+.env.local
+.env.*.local
+
+# Logs et dumps
+*.log
+npm-debug.log*
+
+# IDE
+.vscode
+.idea
+.DS_Store
+
+# Le Dockerfile est lu directement par Docker, inutile dans le contexte.
+# En revanche docker/nginx.conf DOIT y rester : il est copie dans le stage runtime.
+Dockerfile*
+
+# Docs (non necessaires en runtime)
+README.md
+LICENSE
