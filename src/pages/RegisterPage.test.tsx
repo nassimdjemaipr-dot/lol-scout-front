@@ -35,7 +35,7 @@ describe('RegisterPage', () => {
     renderWithProviders(<RegisterPage />);
 
     await userEvent.type(screen.getByLabelText(/^Email$/i), 'a@test.com');
-    await userEvent.type(screen.getByLabelText(/^Mot de passe$/i), 'password123');
+    await userEvent.type(screen.getByLabelText(/^Mot de passe$/i), 'password-2026');
     await userEvent.type(screen.getByLabelText(/Confirmer le mot de passe/i), 'OTHER-password');
     await userEvent.click(screen.getByRole('button', { name: /S'inscrire/i }));
 
@@ -48,19 +48,19 @@ describe('RegisterPage', () => {
 
     renderWithProviders(<RegisterPage />);
     await userEvent.type(screen.getByLabelText(/^Email$/i), 'new@test.com');
-    await userEvent.type(screen.getByLabelText(/^Mot de passe$/i), 'password123');
-    await userEvent.type(screen.getByLabelText(/Confirmer le mot de passe/i), 'password123');
+    await userEvent.type(screen.getByLabelText(/^Mot de passe$/i), 'password-2026');
+    await userEvent.type(screen.getByLabelText(/Confirmer le mot de passe/i), 'password-2026');
     await userEvent.click(screen.getByRole('button', { name: /S'inscrire/i }));
 
     await waitFor(() => {
       expect(registerMock).toHaveBeenCalledWith({
         email: 'new@test.com',
-        password: 'password123',
+        password: 'password-2026',
         role: 'ROLE_PLAYER',
       });
     });
     await waitFor(() => {
-      expect(loginMock).toHaveBeenCalledWith('new@test.com', 'password123');
+      expect(loginMock).toHaveBeenCalledWith('new@test.com', 'password-2026');
     });
   });
 
