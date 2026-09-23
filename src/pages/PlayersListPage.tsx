@@ -1,10 +1,10 @@
-// Liste des joueurs publique avec filtres (rôle, disponibilité).
+// Liste des joueurs publique avec filtres (rôle, rang minimum, disponibilité).
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { playerService } from '../services/player.service';
-import { PLAYER_ROLES, type PlayerRole } from '../types';
+import { PLAYER_ROLES, RANKS, type PlayerRole, type Rank } from '../types';
 import { Card } from '../components/ui/Card';
 import { RoleBadge } from '../components/ui/RoleBadge';
 import { RankBadge } from '../components/ui/RankBadge';
@@ -14,13 +14,15 @@ import styles from './PlayersListPage.module.css';
 export function PlayersListPage() {
   const [filterRole, setFilterRole] = useState<PlayerRole | ''>('');
   const [filterAvailable, setFilterAvailable] = useState<boolean>(false);
+  const [filterMinRank, setFilterMinRank] = useState<Rank | ''>('');
 
   const { data: players, isLoading, isError } = useQuery({
-    queryKey: ['players', filterRole, filterAvailable],
+    queryKey: ['players', filterRole, filterAvailable, filterMinRank],
     queryFn: () =>
       playerService.list({
         role: filterRole || undefined,
         available: filterAvailable || undefined,
+        minRank: filterMinRank || undefined,
       }),
   });
 
@@ -55,6 +57,23 @@ export function PlayersListPage() {
               </button>
             ))}
           </div>
+        </div>
+
+        <div className={styles.filterGroup}>
+          <label htmlFor="min-rank">Rang minimum :</label>
+          <select
+            id="min-rank"
+            className={styles.select}
+            value={filterMinRank}
+            onChange={(e) => setFilterMinRank(e.target.value as Rank | '')}
+          >
+            <option value="">Tous les rangs</option>
+            {RANKS.map((rank) => (
+              <option key={rank} value={rank}>
+                {rank} et plus
+              </option>
+            ))}
+          </select>
         </div>
 
         <label className={styles.checkbox}>
