@@ -35,6 +35,7 @@ FROM nginx:alpine AS runtime
 
 # Config Nginx custom : gere le routing SPA + gzip + cache assets
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/security-headers.conf /etc/nginx/security-headers.conf
 
 # Copie du build statique depuis le stage builder
 COPY --from=builder /app/dist /usr/share/nginx/html
