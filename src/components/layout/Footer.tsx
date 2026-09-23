@@ -1,5 +1,6 @@
 // Footer minimaliste avec liens et mentions.
 
+import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 
 export function Footer() {
@@ -12,10 +13,10 @@ export function Footer() {
         </div>
 
         <div className={styles.links}>
-          <a href="#">À propos</a>
-          <a href="#">CGU</a>
-          <a href="#">Confidentialité</a>
-          <a href="#">Contact</a>
+          <Link to="/mentions-legales">Mentions légales</Link>
+          <Link to="/cgu">CGU</Link>
+          <Link to="/confidentialite">Confidentialité</Link>
+          <a href="mailto:contact@lol-scout.fr">Contact</a>
         </div>
 
         <p className={styles.legal}>

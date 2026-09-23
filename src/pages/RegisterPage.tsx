@@ -94,7 +94,7 @@ export function RegisterPage() {
               autoComplete="new-password"
               {...register('password', {
                 required: 'Mot de passe requis',
-                minLength: { value: 8, message: 'Au moins 8 caractères' },
+                minLength: { value: 12, message: 'Au moins 12 caractères' },
               })}
             />
             {errors.password && <span className={styles.error}>{errors.password.message}</span>}

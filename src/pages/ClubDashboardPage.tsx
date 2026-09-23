@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
+import { DeleteAccountCard } from '../components/ui/DeleteAccountCard';
 import styles from './DashboardPage.module.css';
 
 export function ClubDashboardPage() {
@@ -88,6 +89,8 @@ export function ClubDashboardPage() {
             </Button>
           </Link>
         </Card>
+
+        <DeleteAccountCard />
       </div>
     </div>
   );

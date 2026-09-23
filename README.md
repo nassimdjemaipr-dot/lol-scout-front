@@ -125,7 +125,7 @@ Configuration Nginx dans `docker/nginx.conf` :
 
 ## 👤 Comptes de démonstration
 
-> Mot de passe commun : **`password`**
+> Mot de passe commun : **`LolScout2026!`**
 > (Les comptes existent grâce aux fixtures du backend.)
 
 | Type | Email |

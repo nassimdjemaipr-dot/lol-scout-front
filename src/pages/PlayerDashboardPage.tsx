@@ -11,6 +11,7 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { RankBadge } from '../components/ui/RankBadge';
 import { RoleBadge } from '../components/ui/RoleBadge';
+import { DeleteAccountCard } from '../components/ui/DeleteAccountCard';
 import { notify } from '../lib/notify';
 import styles from './DashboardPage.module.css';
 
@@ -272,6 +273,8 @@ export function PlayerDashboardPage() {
             </Button>
           </Link>
         </Card>
+
+        <DeleteAccountCard />
       </div>
     </div>
   );

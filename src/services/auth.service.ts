@@ -25,4 +25,9 @@ export const authService = {
     const { data } = await api.get<User>('/me');
     return data;
   },
+
+  /** Efface les données personnelles du compte courant (RGPD, art. 17) */
+  async deleteAccount(): Promise<void> {
+    await api.delete('/me');
+  },
 };
