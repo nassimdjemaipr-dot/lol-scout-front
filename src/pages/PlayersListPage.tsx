@@ -2,19 +2,38 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { playerService } from '../services/player.service';
 import { PLAYER_ROLES, RANKS, type PlayerRole, type Rank } from '../types';
 import { Card } from '../components/ui/Card';
 import { RoleBadge } from '../components/ui/RoleBadge';
 import { RankBadge } from '../components/ui/RankBadge';
 import { Button } from '../components/ui/Button';
+import { MAX_COMPARISON } from '../lib/comparison';
+import compareStyles from './ComparePlayersPage.module.css';
 import styles from './PlayersListPage.module.css';
 
 export function PlayersListPage() {
   const [filterRole, setFilterRole] = useState<PlayerRole | ''>('');
   const [filterAvailable, setFilterAvailable] = useState<boolean>(false);
   const [filterMinRank, setFilterMinRank] = useState<Rank | ''>('');
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const navigate = useNavigate();
+
+  // La carte entiere est un lien : sans stopPropagation, cocher un joueur
+  // ouvrirait son profil au lieu de le selectionner.
+  const toggleSelection = (event: React.MouseEvent, id: number) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    setSelectedIds((current) =>
+      current.includes(id)
+        ? current.filter((selected) => selected !== id)
+        : current.length >= MAX_COMPARISON
+          ? current
+          : [...current, id]
+    );
+  };
 
   const { data: players, isLoading, isError } = useQuery({
     queryKey: ['players', filterRole, filterAvailable, filterMinRank],
@@ -135,9 +154,55 @@ export function PlayersListPage() {
                 <Button variant="ghost" size="sm" fullWidth>
                   Voir le profil
                 </Button>
+
+                <button
+                  type="button"
+                  className={`${styles.compareToggle} ${selectedIds.includes(player.id) ? styles.compareToggleActive : ''}`}
+                  aria-pressed={selectedIds.includes(player.id)}
+                  disabled={
+                    !selectedIds.includes(player.id) &&
+                    selectedIds.length >= MAX_COMPARISON
+                  }
+                  onClick={(event) => toggleSelection(event, player.id)}
+                >
+                  {selectedIds.includes(player.id)
+                    ? '✓ Sélectionné'
+                    : 'Ajouter à la comparaison'}
+                </button>
               </Card>
             </Link>
           ))}
+        </div>
+      )}
+
+      {selectedIds.length > 0 && (
+        <div className={compareStyles.selectionBar}>
+          <div className={compareStyles.selectionList}>
+            <strong>
+              {selectedIds.length} joueur{selectedIds.length > 1 ? 's' : ''}
+            </strong>{' '}
+            sélectionné{selectedIds.length > 1 ? 's' : ''}
+            {selectedIds.length === 1 && (
+              <span className="text-muted"> — il en faut au moins deux</span>
+            )}
+            {selectedIds.length === MAX_COMPARISON && (
+              <span className="text-muted"> — maximum atteint</span>
+            )}
+          </div>
+
+          <div className={compareStyles.selectionActions}>
+            <Button
+              variant="primary"
+              size="sm"
+              disabled={selectedIds.length < 2}
+              onClick={() => navigate(`/players/compare?ids=${selectedIds.join(',')}`)}
+            >
+              Comparer
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => setSelectedIds([])}>
+              Annuler
+            </Button>
+          </div>
         </div>
       )}
     </div>

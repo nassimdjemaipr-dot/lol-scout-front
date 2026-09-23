@@ -161,3 +161,34 @@
   border-color: var(--color-teal);
   outline: none;
 }
+
+.compareToggle {
+  width: 100%;
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.compareToggle:hover:not(:disabled) {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+}
+
+.compareToggle:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.compareToggleActive {
+  border-style: solid;
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+  background: rgba(10, 200, 185, 0.1);
+}
