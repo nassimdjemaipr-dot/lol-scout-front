@@ -11,6 +11,7 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { PlayersListPage } from './pages/PlayersListPage';
 import { PlayerProfilePage } from './pages/PlayerProfilePage';
+import { ComparePlayersPage } from './pages/ComparePlayersPage';
 import { OffersListPage } from './pages/OffersListPage';
 import { OfferDetailPage } from './pages/OfferDetailPage';
 import { PlayerDashboardPage } from './pages/PlayerDashboardPage';
@@ -35,6 +36,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/players" element={<PlayersListPage />} />
+        <Route path="/players/compare" element={<ComparePlayersPage />} />
         <Route path="/players/:id" element={<PlayerProfilePage />} />
         <Route path="/offers" element={<OffersListPage />} />
         <Route path="/offers/:id" element={<OfferDetailPage />} />

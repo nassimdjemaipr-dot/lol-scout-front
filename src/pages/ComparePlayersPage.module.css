@@ -1,0 +1,103 @@
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.header h1 {
+  font-family: var(--font-heading);
+  color: var(--color-gold);
+  margin-bottom: var(--space-2);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: var(--space-3);
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.table thead th {
+  font-family: var(--font-heading);
+  color: var(--color-cream);
+  border-bottom: 2px solid var(--color-gold);
+}
+
+.criterion {
+  text-align: left;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.playerLink {
+  color: var(--color-teal);
+  text-decoration: none;
+  font-size: var(--font-size-lg);
+}
+
+.playerLink:hover {
+  text-decoration: underline;
+}
+
+.best {
+  background: rgba(40, 183, 69, 0.14);
+  color: var(--color-success);
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.contextRow td {
+  opacity: 0.75;
+}
+
+.available {
+  color: var(--color-success);
+}
+
+.caveat {
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--color-gold);
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+/* ─── Barre de sélection, affichée sur la liste des joueurs ─── */
+.selectionBar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.selectionList {
+  flex: 1;
+  min-width: 200px;
+  color: var(--color-cream);
+}
+
+.selectionActions {
+  display: flex;
+  gap: var(--space-2);
+}
