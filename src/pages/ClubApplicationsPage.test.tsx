@@ -2,6 +2,13 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { renderWithProviders, screen, userEvent, waitFor } from '../test/test-utils';
 import { ClubApplicationsPage } from './ClubApplicationsPage';
 
+const navigateMock = vi.fn();
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return { ...actual, useNavigate: () => navigateMock };
+});
+
 const listForClubMock = vi.fn();
 const updateStatusMock = vi.fn();
 
@@ -30,10 +37,24 @@ const fakeApplication = {
   offer: { id: 7, title: 'Recherche MID' },
 };
 
+const secondMidApplication = {
+  ...fakeApplication,
+  id: 43,
+  player: { ...fakeApplication.player, id: 2, pseudo: 'FaastHands' },
+};
+
+const otherOfferApplication = {
+  ...fakeApplication,
+  id: 44,
+  player: { ...fakeApplication.player, id: 2, pseudo: 'JungleKing', gameRole: 'JUNGLE' },
+  offer: { id: 8, title: 'Recherche JUNGLE' },
+};
+
 describe('ClubApplicationsPage', () => {
   beforeEach(() => {
     listForClubMock.mockReset();
     updateStatusMock.mockReset();
+    navigateMock.mockReset();
   });
 
   it('renders received applications', async () => {
@@ -42,7 +63,7 @@ describe('ClubApplicationsPage', () => {
 
     await waitFor(() => {
       expect(screen.getByText('ShadowMid')).toBeInTheDocument();
-      expect(screen.getByText(/Recherche MID/)).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /Recherche MID/ })).toBeInTheDocument();
     });
   });
 
@@ -121,67 +142,124 @@ describe('ClubApplicationsPage', () => {
     expect(link).toHaveAttribute('href', '/players/1');
     expect(screen.queryByRole('button', { name: /Accepter/i })).not.toBeInTheDocument();
   });
-  it('propose la comparaison quand une offre recoit deux candidatures', async () => {
-    listForClubMock.mockResolvedValueOnce([
-      fakeApplication,
-      { ...fakeApplication, id: 43, player: { ...fakeApplication.player, id: 2, pseudo: "JungleKing" } },
-    ]);
+  // ─── Filtrage par offre et recherche ──────────────────────
+
+  it('filtre les candidatures sur une offre', async () => {
+    listForClubMock.mockResolvedValueOnce([fakeApplication, otherOfferApplication]);
     renderWithProviders(<ClubApplicationsPage />);
 
-    const link = await screen.findByRole('link', { name: /Comparer les 2 candidats/i });
-    expect(link).toHaveAttribute('href', '/players/compare?ids=1,2');
+    await screen.findByText('ShadowMid');
+    await userEvent.click(screen.getByRole('button', { name: /Recherche JUNGLE \(1\)/ }));
+
+    expect(screen.queryByText('ShadowMid')).not.toBeInTheDocument();
+    expect(screen.getByText('JungleKing')).toBeInTheDocument();
   });
 
-  it('ne propose pas la comparaison sur une offre a candidat unique', async () => {
+  it('revient a toutes les offres', async () => {
+    listForClubMock.mockResolvedValueOnce([fakeApplication, otherOfferApplication]);
+    renderWithProviders(<ClubApplicationsPage />);
+
+    await screen.findByText('ShadowMid');
+    await userEvent.click(screen.getByRole('button', { name: /Recherche JUNGLE \(1\)/ }));
+    await userEvent.click(screen.getByRole('button', { name: /Toutes les offres/ }));
+
+    expect(screen.getByText('ShadowMid')).toBeInTheDocument();
+    expect(screen.getByText('JungleKing')).toBeInTheDocument();
+  });
+
+  it('recherche un candidat par pseudo', async () => {
+    listForClubMock.mockResolvedValueOnce([fakeApplication, otherOfferApplication]);
+    renderWithProviders(<ClubApplicationsPage />);
+
+    await screen.findByText('ShadowMid');
+    await userEvent.type(screen.getByRole('searchbox'), 'jungle');
+
+    expect(screen.getByText('JungleKing')).toBeInTheDocument();
+    expect(screen.queryByText('ShadowMid')).not.toBeInTheDocument();
+  });
+
+  it('signale une recherche sans resultat', async () => {
     listForClubMock.mockResolvedValueOnce([fakeApplication]);
     renderWithProviders(<ClubApplicationsPage />);
 
-    await waitFor(() => {
-      expect(screen.getByText('ShadowMid')).toBeInTheDocument();
-    });
-    expect(screen.queryByRole('link', { name: /Comparer/i })).not.toBeInTheDocument();
+    await screen.findByText('ShadowMid');
+    await userEvent.type(screen.getByRole('searchbox'), 'zzzz');
+
+    expect(screen.getByText(/Aucune candidature ne correspond/i)).toBeInTheDocument();
   });
 
-  it('ne compare pas des candidats de deux offres differentes', async () => {
+  // ─── Selection pour la comparaison ────────────────────────
+
+  it('ne compare pas avant deux candidats selectionnes', async () => {
+    listForClubMock.mockResolvedValueOnce([fakeApplication, secondMidApplication]);
+    renderWithProviders(<ClubApplicationsPage />);
+
+    const toggles = await screen.findAllByRole('button', { name: /Ajouter .+ la comparaison/i });
+    await userEvent.click(toggles[0]);
+
+    expect(screen.getByText(/il en faut au moins deux/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Comparer$/ })).toBeDisabled();
+  });
+
+  it('compare les candidats explicitement selectionnes', async () => {
+    listForClubMock.mockResolvedValueOnce([fakeApplication, secondMidApplication]);
+    renderWithProviders(<ClubApplicationsPage />);
+
+    const toggles = await screen.findAllByRole('button', { name: /Ajouter .+ la comparaison/i });
+    await userEvent.click(toggles[0]);
+    await userEvent.click(toggles[1]);
+    await userEvent.click(screen.getByRole('button', { name: /^Comparer$/ }));
+
+    expect(navigateMock).toHaveBeenCalledWith('/players/compare?ids=1,2');
+  });
+
+  it('verrouille la selection sur une seule offre', async () => {
+    listForClubMock.mockResolvedValueOnce([fakeApplication, otherOfferApplication]);
+    renderWithProviders(<ClubApplicationsPage />);
+
+    const toggles = await screen.findAllByRole('button', { name: /Ajouter .+ la comparaison/i });
+    await userEvent.click(toggles[0]);
+
+    expect(screen.getAllByRole('button', { name: /Ajouter .+ la comparaison/i })[0]).toBeDisabled();
+    expect(screen.getByText(/comparaison en cours sur une autre offre/i)).toBeInTheDocument();
+  });
+
+  it('deselectionne un candidat et libere l offre', async () => {
+    listForClubMock.mockResolvedValueOnce([fakeApplication, otherOfferApplication]);
+    renderWithProviders(<ClubApplicationsPage />);
+
+    const toggles = await screen.findAllByRole('button', { name: /Ajouter .+ la comparaison/i });
+    await userEvent.click(toggles[0]);
+    await userEvent.click(screen.getByRole('button', { name: /lectionn/i }));
+
+    expect(screen.queryByRole('button', { name: /^Comparer$/ })).not.toBeInTheDocument();
+    expect(screen.queryByText(/comparaison en cours sur une autre offre/i)).not.toBeInTheDocument();
+  });
+
+  it('plafonne la selection a trois candidats', async () => {
     listForClubMock.mockResolvedValueOnce([
       fakeApplication,
-      {
-        ...fakeApplication,
-        id: 44,
-        player: { ...fakeApplication.player, id: 2, pseudo: "JungleKing" },
-        offer: { id: 8, title: 'Recherche JUNGLE' },
-      },
+      secondMidApplication,
+      { ...fakeApplication, id: 46, player: { ...fakeApplication.player, id: 3, pseudo: 'P3' } },
+      { ...fakeApplication, id: 47, player: { ...fakeApplication.player, id: 4, pseudo: 'P4' } },
     ]);
     renderWithProviders(<ClubApplicationsPage />);
 
-    await waitFor(() => {
-      expect(screen.getByRole('link', { name: /Recherche JUNGLE/ })).toBeInTheDocument();
-    });
-    expect(screen.queryByRole('link', { name: /Comparer/i })).not.toBeInTheDocument();
-  });
+    const toggles = await screen.findAllByRole('button', { name: /Ajouter .+ la comparaison/i });
+    await userEvent.click(toggles[0]);
+    await userEvent.click(toggles[1]);
+    await userEvent.click(toggles[2]);
 
-  it('plafonne la comparaison a trois candidats', async () => {
-    listForClubMock.mockResolvedValueOnce([
-      fakeApplication,
-      { ...fakeApplication, id: 45, player: { ...fakeApplication.player, id: 2, pseudo: "P2" } },
-      { ...fakeApplication, id: 46, player: { ...fakeApplication.player, id: 3, pseudo: "P3" } },
-      { ...fakeApplication, id: 47, player: { ...fakeApplication.player, id: 4, pseudo: "P4" } },
-    ]);
-    renderWithProviders(<ClubApplicationsPage />);
-
-    const link = await screen.findByRole('link', { name: /Comparer les 3 premiers/i });
-    expect(link).toHaveAttribute('href', '/players/compare?ids=1,2,3');
+    expect(screen.getByText(/maximum atteint/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Ajouter .+ la comparaison/i })).toBeDisabled();
   });
 
   it('compte les candidatures de chaque offre', async () => {
-    listForClubMock.mockResolvedValueOnce([
-      fakeApplication,
-      { ...fakeApplication, id: 48, player: { ...fakeApplication.player, id: 2, pseudo: "P2" } },
-    ]);
+    listForClubMock.mockResolvedValueOnce([fakeApplication, secondMidApplication]);
     renderWithProviders(<ClubApplicationsPage />);
 
     await waitFor(() => {
-      expect(screen.getByText('2 candidatures')).toBeInTheDocument();
+      expect(screen.getByText(/2 candidatures/)).toBeInTheDocument();
     });
   });
 });

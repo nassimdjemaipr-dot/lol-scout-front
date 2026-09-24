@@ -181,3 +181,94 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  padding: var(--space-2) var(--space-4);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.chip:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.chipActive {
+  background: var(--color-gold);
+  color: var(--color-dark-blue);
+  border-color: var(--color-gold);
+}
+
+.search {
+  min-width: 220px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  transition: var(--transition-base);
+}
+
+.search:focus {
+  outline: none;
+  border-color: var(--color-teal);
+}
+
+.search::placeholder {
+  color: var(--color-text-faded);
+}
+
+.compareToggle {
+  width: 100%;
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.compareToggle:hover:not(:disabled) {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+}
+
+.compareToggle:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.compareToggleActive {
+  border-style: solid;
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+  background: rgba(10, 200, 185, 0.1);
+}
