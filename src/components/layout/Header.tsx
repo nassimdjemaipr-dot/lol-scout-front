@@ -4,6 +4,7 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/Button';
+import { Logo } from '../ui/Logo';
 import { notify } from '../../lib/notify';
 import styles from './Header.module.css';
 
@@ -26,11 +27,9 @@ export function Header() {
   return (
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
-        <Link to="/" className={styles.logo}>
-          <span className={styles.logoMark}>⬢</span>
-          <span className={styles.logoText}>
-            LoL <span className={styles.logoAccent}>Scout</span>
-          </span>
+        <Link to="/" className={styles.logo} aria-label="LoL Scout — accueil">
+          <Logo variant="mark" className={styles.logoMark} />
+          <Logo variant="full" className={styles.logoLockup} />
         </Link>
 
         <nav className={styles.nav}>

@@ -35,7 +35,7 @@ describe('Header', () => {
     useAuthMock.mockReturnValue({ isAuthenticated: false, user: null, logout: logoutMock });
     renderHeader();
 
-    expect(screen.getByText('LoL')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /LoL Scout/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Connexion/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Créer un compte/i })).toBeInTheDocument();
   });
