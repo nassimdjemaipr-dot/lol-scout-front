@@ -22,6 +22,7 @@ import { ClubDashboardPage } from './pages/ClubDashboardPage';
 import { MyApplicationsPage } from './pages/MyApplicationsPage';
 import { ClubApplicationsPage } from './pages/ClubApplicationsPage';
 import { CreateOfferPage } from './pages/CreateOfferPage';
+import { MyOffersPage } from './pages/MyOffersPage';
 import { EditPlayerProfilePage } from './pages/EditPlayerProfilePage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { LegalNoticePage } from './pages/legal/LegalNoticePage';
@@ -61,7 +62,7 @@ function App() {
         {/* ─── Routes Club (ROLE_CLUB) ──────────────────── */}
         <Route element={<ProtectedRoute requiredRole="ROLE_CLUB" />}>
           <Route path="/dashboard/club" element={<ClubDashboardPage />} />
-          <Route path="/dashboard/club/offers" element={<PlaceholderPage title="Mes offres" />} />
+          <Route path="/dashboard/club/offers" element={<MyOffersPage />} />
           <Route path="/dashboard/club/offers/new" element={<CreateOfferPage />} />
           <Route path="/dashboard/club/applications" element={<ClubApplicationsPage />} />
         </Route>
