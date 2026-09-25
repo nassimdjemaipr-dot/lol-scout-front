@@ -12,6 +12,9 @@ import { RegisterPage } from './pages/RegisterPage';
 import { PlayersListPage } from './pages/PlayersListPage';
 import { PlayerProfilePage } from './pages/PlayerProfilePage';
 import { ComparePlayersPage } from './pages/ComparePlayersPage';
+import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
+import { AdminUsersPage } from './pages/admin/AdminUsersPage';
+import { AdminClubsPage } from './pages/admin/AdminClubsPage';
 import { OffersListPage } from './pages/OffersListPage';
 import { OfferDetailPage } from './pages/OfferDetailPage';
 import { PlayerDashboardPage } from './pages/PlayerDashboardPage';
@@ -61,6 +64,13 @@ function App() {
           <Route path="/dashboard/club/offers" element={<PlaceholderPage title="Mes offres" />} />
           <Route path="/dashboard/club/offers/new" element={<CreateOfferPage />} />
           <Route path="/dashboard/club/applications" element={<ClubApplicationsPage />} />
+        </Route>
+
+        {/* ─── Routes Administrateur (ROLE_ADMIN) ───────── */}
+        <Route element={<ProtectedRoute requiredRole="ROLE_ADMIN" />}>
+          <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/admin/users" element={<AdminUsersPage />} />
+          <Route path="/admin/clubs" element={<AdminClubsPage />} />
         </Route>
 
         {/* ─── 404 ───────────────────────────────────────── */}

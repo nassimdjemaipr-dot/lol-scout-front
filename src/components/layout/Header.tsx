@@ -20,6 +20,7 @@ export function Header() {
   const roleBadge =
     user?.role === 'ROLE_PLAYER' ? '🎮 Joueur'
     : user?.role === 'ROLE_CLUB' ? '🏆 Club'
+    : user?.role === 'ROLE_ADMIN' ? '🛡️ Admin'
     : null;
 
   return (
@@ -47,6 +48,11 @@ export function Header() {
           {isAuthenticated && user?.role === 'ROLE_CLUB' && (
             <NavLink to="/dashboard/club" className={({ isActive }) => (isActive ? styles.active : styles.link)}>
               Mon club
+            </NavLink>
+          )}
+          {isAuthenticated && user?.role === 'ROLE_ADMIN' && (
+            <NavLink to="/admin" className={({ isActive }) => (isActive ? styles.active : styles.link)}>
+              Administration
             </NavLink>
           )}
         </nav>
