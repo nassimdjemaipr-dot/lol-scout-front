@@ -14,7 +14,7 @@ function renderFooter() {
 describe('Footer', () => {
   it('shows the brand', () => {
     renderFooter();
-    expect(screen.getByText('LoL Scout')).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'LoL Scout' })).toBeInTheDocument();
   });
 
   it('renders the legal links', () => {

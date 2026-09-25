@@ -19,30 +19,22 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  color: var(--color-cream);
-  font-family: var(--font-display);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-xl);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  transition: var(--transition-base);
 }
 
 .logo:hover {
-  color: var(--color-gold);
+  opacity: 0.85;
 }
 
 .logoMark {
-  color: var(--color-gold);
-  font-size: var(--font-size-2xl);
+  width: 32px;
+  height: 32px;
 }
 
-.logoText {
+/* Le bloc complet remplace la mire seule à partir de la tablette. */
+.logoLockup {
   display: none;
-}
-
-.logoAccent {
-  color: var(--color-gold);
+  font-size: 26px;
 }
 
 .nav {
@@ -110,8 +102,11 @@
 
 /* ─── Tablette ──────────────────────────────────────── */
 @media (min-width: 768px) {
-  .logoText {
-    display: inline;
+  .logoMark {
+    display: none;
+  }
+  .logoLockup {
+    display: inline-flex;
   }
   .nav {
     display: flex;

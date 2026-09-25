@@ -1,6 +1,7 @@
 // Footer minimaliste avec liens et mentions.
 
 import { Link } from 'react-router-dom';
+import { Logo } from '../ui/Logo';
 import styles from './Footer.module.css';
 
 export function Footer() {
@@ -8,8 +9,7 @@ export function Footer() {
     <footer className={styles.footer}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.brand}>
-          <span className={styles.logoMark}>⬢</span>
-          <strong>LoL Scout</strong>
+          <Logo variant="full" className={styles.logo} />
         </div>
 
         <div className={styles.links}>

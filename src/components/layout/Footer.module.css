@@ -24,9 +24,8 @@
   text-transform: uppercase;
 }
 
-.logoMark {
-  color: var(--color-gold);
-  font-size: var(--font-size-xl);
+.logo {
+  font-size: 22px;
 }
 
 .links {

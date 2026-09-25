@@ -22,6 +22,6 @@ describe('Layout', () => {
 
     expect(screen.getByTestId('header-mock')).toBeInTheDocument();
     expect(screen.getByText('Page content')).toBeInTheDocument();
-    expect(screen.getByText('LoL Scout')).toBeInTheDocument(); // dans le Footer
+    expect(screen.getAllByRole('img', { name: 'LoL Scout' }).length).toBeGreaterThan(0);
   });
 });
